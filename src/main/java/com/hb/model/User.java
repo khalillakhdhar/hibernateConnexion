@@ -11,6 +11,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
 
 @Entity
 public class User {
@@ -20,12 +22,19 @@ private long id;
 @Column(nullable = false,length = 30)
 private String nom,prenom;
 @Column(unique = true)
+@Email
 private String email;
 @Column(name = "mdp")
 private String password;
 @Temporal(TemporalType.TIMESTAMP)
 @CreatedDate
+// récupére la date et heure systéme
 private Date dateCreation;
+@Min(value = 18)
+private int age;
+@Column(columnDefinition = "varchar(30) default 'étudiant' ") // valeur par défaut
+private String grade;
+
 public long getId() {
 	return id;
 }
@@ -61,6 +70,16 @@ public Date getDateCreation() {
 }
 public void setDateCreation(Date dateCreation) {
 	this.dateCreation = dateCreation;
+}
+
+
+
+
+public int getAge() {
+	return age;
+}
+public void setAge(int age) {
+	this.age = age;
 }
 public User() {
 	super();
